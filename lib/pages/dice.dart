@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
-class Dice extends StatelessWidget {
-  const Dice({Key? key}) : super(key: key);
+class Dice extends StatefulWidget {
+  Dice({
+    Key? key,
+  }) : super(key: key);
+  int leftDice1 = 1;
+  int leftDice2 = 1;
+
+  @override
+  State<Dice> createState() => _DiceState();
+}
+
+class _DiceState extends State<Dice> {
+  randomDice() {
+    var result1 = Random().nextInt(6) + 1;
+    var result2 = Random().nextInt(6) + 1;
+    setState(() {
+      widget.leftDice1 = result1;
+      widget.leftDice2 = result2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +39,13 @@ class Dice extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Image.asset('image/dice1.png'),
+                  child: Image.asset('image/dice${widget.leftDice1}.png'),
                 ),
                 SizedBox(
                   width: 20,
                 ),
                 Expanded(
-                  child: Image.asset('image/dice2.png'),
+                  child: Image.asset('image/dice${widget.leftDice2}.png'),
                 ),
               ],
             ),
@@ -41,7 +60,9 @@ class Dice extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     primary: Colors.orangeAccent,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    randomDice();
+                  },
                   child: Icon(
                     Icons.play_arrow,
                     color: Colors.white,
